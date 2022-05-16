@@ -3,7 +3,7 @@ CREATE TABLE category (
     cname VARCHAR(50) NOT NULL,
     priority VARCHAR(6) NOT NULL,
     color VARCHAR(20),
-    CONSTRAINT category_categoryid_pk PRIMARY KEY (categoryid)
+    PRIMARY KEY (categoryid)
 );
 
 CREATE TABLE task (
@@ -13,7 +13,7 @@ CREATE TABLE task (
     status VARCHAR(11) NOT NULL DEFAULT "new",
     duedate DATE,
     categoryid INT(2),
-    CONSTRAINT task_taskid_pk PRIMARY KEY (taskid),
+    PRIMARY KEY (taskid),
     CONSTRAINT task_categoryid_fk FOREIGN KEY (categoryid) REFERENCES category (categoryid)
 );
 

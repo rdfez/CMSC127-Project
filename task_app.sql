@@ -10,7 +10,7 @@ CREATE TABLE task (
     taskid INT(2) NOT NULL,
     title VARCHAR(50) NOT NULL,
     details VARCHAR(500) NOT NULL,
-    status VARCHAR(11) NOT NULL DEFAULT "new",
+    status VARCHAR(11) NOT NULL DEFAULT "not started",
     duedate DATE,
     categoryid INT(2),
     PRIMARY KEY (taskid),
@@ -21,7 +21,7 @@ CREATE TABLE task (
 INSERT INTO category VALUES (1, "Acad-related", "Urgent", "Pink"), (2, "Org-related", "High", "Violet"), (3, "Movies to watch", "Low", "Orange"), (4, "Personal", "Normal", "Yellow");
 
 --Add/Create Task
-INSERT INTO task VALUES (01, "CMSC 127 Exercise 1", "ER Model/EER Model", "new", "2022-05-30", 1), (02, "CMSC 131 Exercise 1", "Basic Arithmetics", "new", "2022-05-22", NULL), (03, "CMSC 131 Quiz 1", "Basic Arithmetics", "new", "2022-05-22", 1);
+INSERT INTO task VALUES (01, "CMSC 127 Exercise 1", "ER Model/EER Model", "not started", "2022-05-30", 1), (02, "CMSC 131 Exercise 1", "Basic Arithmetics", "not started", "2022-05-22", NULL), (03, "CMSC 131 Quiz 1", "Basic Arithmetics", "not started", "2022-05-22", 1);
 
 --Edit Task
 UPDATE task SET status = "in progress" WHERE taskid = 01;

@@ -173,6 +173,7 @@ def viewmenu (): #View feature's menu
           elif view == 2:
             print("\n-> Viewing all categories")
             #view all categories
+            view_allcategories(cur)
           else: break
     else: break
 

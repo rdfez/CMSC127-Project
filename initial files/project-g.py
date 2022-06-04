@@ -63,6 +63,27 @@ def Count (t):
       return None
     else: return count[0]
 
+def validator(t, id):
+  
+  if t == "task":
+    cur.execute("SELECT taskid, title, details, status, duedate, categoryid FROM task WHERE taskid = ?", (id,))
+    for taskid, title, details, status, duedate, categoryid in cur:
+      if id == taskid: return 1
+
+  elif t == "category": 
+    cur.execute("SELECT categoryid, cname, priority, color FROM category WHERE categoryid = ?", (id,))
+    for categoryid, cname, priority, color in cur:
+      if id == categoryid: return 1
+
+  return 0
+
+def getCategories():
+  category_list = []
+  cur.execute("SELECT taskid, title, details, status, duedate, categoryid FROM task GROUP BY categoryid")
+  for taskid, title, details, status, duedate, categoryid in cur:
+    category_list.append(categoryid)
+  return category_list    
+
 def viewAllCategory (): #function for view all categories 
   cur.execute("SELECT categoryid, cname, priority, color FROM category") 
 

@@ -129,6 +129,13 @@ def add_task():
     cur.execute("INSERT INTO task VALUES (?, ?, ?, ?, ?, ?);", (task_id, title, details, status_arr[status-1], duedate, category))
 
 # Get user input and validate
+# - Parameters:
+#   1. msg (string): message prompt for input
+#   2. type (string): input type (int, string, date)
+#   3. min (int): minimum value
+#   4. max (int): maximum value
+#   5. optional_msg (string): message prompt for optional attributes ('y/n' prompts)
+#   6. optional_rev (bool): False = return NULL if a 'no' input should disregard optional attribute, otherwise True if 'yes'
 def get_input(msg, type, min, max, optional_msg, optional_rev):
     # For optional attributes
     if optional_msg:
@@ -170,12 +177,11 @@ def get_input(msg, type, min, max, optional_msg, optional_rev):
             except (ValueError, TypeError):
                 print("Invalid input!")
 
-
+# Edit task
 def edit_task():
     edit_bool = True
 
     # Task id
-    # cur.execute("SELECT taskid, title, details, status, duedate, categoryid, COUNT(*) count FROM task")
     cur.execute("SELECT COUNT(*) count FROM task")
 
     for count in cur:
@@ -246,7 +252,7 @@ def edit_task():
         else:
             print("Invalid choice!")
 
-        cur.execute("UPDATE task SET " + attribute + " = ? WHERE taskid = ?;", (value, task_id))
+        cur.execute(f"UPDATE task SET {attribute} = ? WHERE taskid = ?;", (value, task_id))
 
 priority_arr = ("Urgent", "High", "Medium", "Low")
 color_arr = ("Black", "Red", "Green", "Yellow", "Blue", "Magenta", "Cyan", "White")

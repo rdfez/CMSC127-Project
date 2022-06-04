@@ -66,7 +66,19 @@ def get_input (msg, type, min, max, optional_msg, optional_rev):
                 return valid_date
             except ValueError:
                 print("Invalid date!")
+        
+        elif type == "month":
+            try:
+              month = int(input(msg))
+              if (month >= min and month <= max):
+                month = str(month).zfill(2)
+                return month
+              else:
+                print("Invalid input!")
 
+            except (ValueError, TypeError):
+                print("Invalid input!")
+        
         elif type == "int":
             try:
                 int_input = int(input(msg))

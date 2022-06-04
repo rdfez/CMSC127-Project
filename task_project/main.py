@@ -78,17 +78,17 @@ def type (t): #Menu to choose between task or category
   return choice
 
 def viewType (t): #Menu specific for different types of view task 
-  print(f"\n------View {t}------")
-  print(f"[1] a {t}")
-  print(f"[2] all {t}")
+  print(f"\nT{t[1:]}:") if t=="task" else print(f"\nC{t[1:]}:")
+  print(f"\t[1] a {t}")
+  print(f"\t[2] all {t}")
   if t == "task":
-    print("[3] tasks per day")
-    print("[4] tasks per month")
+    print("\t[3] tasks per day")
+    print("\t[4] tasks per month")
     max = 4
   else: max = 2
-  print("[0] Back to View Menu")
+  print("\t[0] Back to View Menu")
   print("-----------------------")
-  choice = get_input(f"\nView: ", "int", 0, max, None, None)
+  choice = get_input(f"\nView {t}: ", "int", 0, max, None, None)
   return choice
 
 def addmenu (): #Add feature's menu

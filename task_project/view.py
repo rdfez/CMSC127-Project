@@ -26,12 +26,13 @@ def view_category (cur):
     # print(category_total)
 
     if category_total > 0:
-        category_id = get_input("Enter Category ID: ", "int", 0, category_total, None, None)
+        category_id = get_input("\nEnter Category ID: ", "int", 0, category_total, None, None)
         cur.execute("SELECT * FROM category WHERE categoryid = ?", (category_id,))
 
         for categoryid, cname, priority, color in cur:
             if category_id == categoryid:
-                print(f"\nCategory Id: {categoryid}, Category Name: {cname} Priority: {priority}, Color: {color}\n")
+                print(f"\n{categoryid}\t{color_arr[color]} {cname} " + Style.RESET_ALL) 
+                print(f" \t! {priority}")
                 flag = 1
     else:
         print("There are currently no categories.")

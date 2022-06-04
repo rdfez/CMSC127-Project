@@ -96,16 +96,10 @@ def addmenu (): #Add feature's menu
   while True:
     add = type("Add")
     if add == 1:
-      taskTotal = count("task", cur)
-      #Checks if task count is not 0
-      if taskTotal is not None:
         print("\n-> Adding a task", cur)
         #call add a task
         add_task(cur)
     elif add == 2:
-      categoryTotal = count("category", cur)
-      #Checks if category count is not 0
-      if categoryTotal is not None: 
         print("\n-> Adding a category")
         #call add a category
         add_category(cur)

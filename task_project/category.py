@@ -17,7 +17,7 @@ def add_category (cur):
         if validator("category", i, cur) == 1:
             continue
         else:
-            new_taskid = i
+            new_categoryid = i
             break
     
     # Category name
@@ -41,7 +41,7 @@ def add_category (cur):
     ''')
     color = get_input("Enter color: ", "int", 1, 8, None, None)
             
-    cur.execute("INSERT INTO category VALUES (?, ?, ?, ?);", (category_id, category_name, priority_arr[priority-1], color_arr[color-1]))
+    cur.execute("INSERT INTO category VALUES (?, ?, ?, ?);", (new_categoryid, category_name, priority_arr[priority-1], color_arr[color-1]))
 
 # Edit category
 def edit_category (cur):

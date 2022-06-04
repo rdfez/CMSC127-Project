@@ -43,7 +43,7 @@ def view_allcategories (cur):
     cur.execute("SELECT categoryid, cname, priority, color FROM category") 
 
     for categoryid, cname, priority, color in cur: 
-        print(f"\n{categoryid}\t{cname} - {color}")
+        print(f"\n{categoryid}\t{color_arr[color]} {cname} " + Style.RESET_ALL)
         print(f" \t! {priority}")
 
   return
@@ -61,7 +61,7 @@ def view_task (totalCount, cur):
             cur.execute("SELECT categoryid, cname,priority, color FROM category WHERE categoryid = ?", (categoryid,))
             for categoryid, cname, priority, color in cur:
                 if taskid == taskID:
-                    print(f"\n({categoryid}) {cname}")
+                    print(f"\n({categoryid}) {color_arr[color]} {cname} " + Style.RESET_ALL)
                     print(f"    {taskid}\t{title}")
                     print(f"\t{details}")
                     print(f"\tStatus: {status}\t Due Date: {duedate}")

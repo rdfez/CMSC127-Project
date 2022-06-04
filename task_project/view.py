@@ -79,7 +79,7 @@ def view_task (totalCount, cur):
     return
 
 # Get list of categories
-def getCategories():
+def getCategories(cur):
     category_list = []
     cur.execute("SELECT taskid, title, details, status, duedate, categoryid FROM task GROUP BY categoryid")
     for taskid, title, details, status, duedate, categoryid in cur:
@@ -89,7 +89,7 @@ def getCategories():
 # View all tasks
 def view_alltasks (cur):
             
-    category_list = getCategories()
+    category_list = getCategories(cur)
 
     for id in category_list:
         if id is None:

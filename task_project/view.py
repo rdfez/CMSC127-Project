@@ -38,6 +38,16 @@ def view_category (cur):
         return None
     if flag==0: print("\nThe category doesn't exist.\n")
 
+# View all categories
+def view_allcategories (cur): 
+    cur.execute("SELECT categoryid, cname, priority, color FROM category") 
+
+    for categoryid, cname, priority, color in cur: 
+        print(f"\n{categoryid}\t{cname} - {color}")
+        print(f" \t! {priority}")
+
+  return
+        
 # View a task
 def view_task (totalCount, cur):
 
@@ -68,25 +78,37 @@ def view_task (totalCount, cur):
 
     return
 
+# Get list of categories
+def getCategories():
+    category_list = []
+    cur.execute("SELECT taskid, title, details, status, duedate, categoryid FROM task GROUP BY categoryid")
+    for taskid, title, details, status, duedate, categoryid in cur:
+        category_list.append(categoryid)
+    return category_list
+
 # View all tasks
 def view_alltasks (cur):
-
-    cur.execute("SELECT categoryid, cname, priority, color FROM category")
-
-    for categoryid, cname, priority, color in cur:
-        print(f"\n({categoryid}) {color_arr[color]} {cname} " + Style.RESET_ALL)
-        cur.execute("SELECT taskid, title, details, status, duedate, categoryid FROM task WHERE categoryid = ?", (categoryid,))
-        for taskid, title, details, status, duedate, categoryid in cur:
-            print(f"\n    {taskid}\t{title}")
-            print(f"\t{details}")
-            print(f"\tStatus: {status}\t Due Date: {duedate}")
             
-    cur.execute("SELECT taskid, title, details, status, duedate, categoryid FROM task WHERE categoryid IS NULL")
-    print(f"\n(No category)")
-    for taskid, title, details, status, duedate, categoryid in cur:
+    category_list = getCategories()
+
+    for id in category_list:
+        if id is None:
+          cur.execute("SELECT taskid, title, details, status, duedate, categoryid FROM task WHERE categoryid IS NULL")
+          for taskid, title, details, status, duedate, categoryid in cur:
+            print(f"\n(No category)")
             print(f"\n    {taskid}\t{title}")
             print(f"\t{details}")
             print(f"\tStatus: {status}\t Due Date: {duedate}")
+
+        cur.execute("SELECT categoryid, cname, priority, color FROM category WHERE categoryid = ?", (id,))
+        for categoryid, cname, priority, color in cur:
+          print(f"\n({categoryid}) {color_arr[color]} {cname} " + Style.RESET_ALL)
+
+        cur.execute("SELECT taskid, title, details, status, duedate, categoryid FROM task WHERE categoryid = ?", (id,))
+        for taskid, title, details, status, duedate, categoryid in cur:
+          print(f"\n    {taskid}\t{title}")
+          print(f"\t{details}")
+          print(f"\tStatus: {status}\t Due Date: {duedate}")
 
     return
 

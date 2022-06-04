@@ -13,7 +13,7 @@ def validator (t, id, cur):
             if id == taskid[0]: return 1   
 
     elif t == "category": 
-        cur.execute("SELECT categoryid, cname FROM category WHERE categoryid = ?", (id))
+        cur.execute("SELECT categoryid FROM category WHERE categoryid = ?", (id,))
         for categoryid in cur:
             if id == categoryid[0]: return 1
 

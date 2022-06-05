@@ -2,8 +2,8 @@ import mariadb
 
 from misc import count, get_input
 from view import view_category, view_alltasks, view_task, view_tasksperday, view_taskspermonth, view_allcategories
-from task import add_task, edit_task, delete_task
-from category import add_category, edit_category, delete_category
+from task import add_task, edit_task, delete_task, delete_all_task
+from category import add_category, edit_category, delete_category, delete_all_category
 
 # Initialize database/connection
 def init():
@@ -86,6 +86,15 @@ def viewType (t): #Menu specific for different types of view task
   else: max = 2
   print("\t[0] Back to View Menu")
   choice = get_input(f"\nView {t}: ", "int", 0, max, None, None)
+  return choice
+
+def deleteType (t): #Menu specific for delete function
+  print(f"\nDelete:")
+  print(f"\t[1] a {t}")
+  print(f"\t[2] all {t}")
+  print(f"\t[0] Back to Menu")
+  max = 2
+  choice = get_input(f"\nDelete {t}: ", "int", 0, max, None, None )
   return choice
 
 def addmenu (): #Add feature's menu
@@ -172,22 +181,38 @@ def viewmenu (): #View feature's menu
 
   return
 
+
 def deletemenu (): #Delete feature's menu
 
   while True:
     delete = type("Delete")
     if delete == 1:
-      taskTotal = count("task", cur, True)
-      if taskTotal is not None:
-        print("\n-> Deleting a task")
-        #call delete a task
-        delete_task(cur)
+      choice = deleteType("task")
+      taskTotal = count("task", cur)
+      if choice == 1:
+        if taskTotal is not None:
+          print("\n-> Deleting a task")
+          #call delete a task
+          delete_task(cur)
+      else:
+          if taskTotal is not None:
+            print("\n-> Deleting all tasks")
+            #call delete all task
+            delete_all_task(cur)
     elif delete == 2:
-      categoryTotal = count("category", cur, True)
-      if categoryTotal is not None: 
-        print("\n-> Deleting a category")
-        #call delete a category
-        delete_category(cur)
+      choice = deleteType("category")
+      categoryTotal = count("category", cur)
+      if choice == 1:
+        if categoryTotal is not None: 
+          print("\n-> Deleting a category")
+          #call delete a category
+          delete_category(cur)
+      else:
+        if categoryTotal is not None: 
+          print("\n-> Deleting all category")
+          #call delete all category
+          delete_all_category(cur)
+
     else: break
 
   return

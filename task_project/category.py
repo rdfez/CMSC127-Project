@@ -115,3 +115,11 @@ def delete_category (cur):
     print("\nCategory deleted.")
 
     return 
+
+def delete_all_category (cur):
+    cur.execute("UPDATE task SET categoryid = NULL;")
+    cur.execute("DELETE FROM category;")
+    print("\nAll category deleted.")
+
+    return 
+

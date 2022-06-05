@@ -1,6 +1,6 @@
 from colorama import Fore, Back, Style 
 
-from misc import get_input, validator
+from misc import get_id, get_input, validator
 from category import priority_arr, color_arr
 from view import color_dict, reset_color, view_task
 
@@ -48,25 +48,13 @@ def add_task (cur):
         category_total = count[0]
 
     if category_total > 0:
-        flag = 0
-        while flag == 0:
-            category = get_input("Enter Category ID: ", "int", 1, 99, "\nAdd to existing category? (y/n) ", False)
-            flag = validator("category", category, cur)
-
-            if flag == 0:
-                print("Invalid input!\n")
-
+        category = get_id("Enter Category ID: ", "category", "\nAdd to existing category? (y/n) ", False, cur)
     else:
         category = None
 
     cur.execute("INSERT INTO task VALUES (?, ?, ?, ?, ?, ?);", (new_taskid, title, details, status_arr[status-1], duedate, category))
-    cur.execute('''
-            SELECT t.taskid, t.title, t.details, t.status, COALESCE(t.duedate,"N/A") duedate, COALESCE(t.categoryid,"N/A") categoryid, CASE
-            WHEN t.categoryid IS NULL THEN "N/A"
-            ELSE (select cname from category where categoryid = t.categoryid) END cname
-            FROM task t WHERE taskid = ?;
-        ''', (new_taskid,))
-
+    
+    print("\nNew Task: ")
     view_task(cur, new_taskid)
 
     print("\nTask added successfully!")
@@ -82,35 +70,22 @@ def edit_task (cur):
         task_total = count[0]
 
     if task_total > 0:
-        flag = 0
-        while flag == 0:
-            task_id = get_input("\nEnter Task ID: ", "int", 1, 99, None, None)
-            flag = validator("task", task_id, cur)
-            
-            if flag == 0:
-                print("Invalid input!\n")
-            elif flag == 1:
-                cur.execute('''
-                    SELECT t.taskid, t.title, t.details, t.status, COALESCE(t.duedate,"N/A") duedate, COALESCE(t.categoryid,"N/A") categoryid, CASE
-                    WHEN t.categoryid IS NULL THEN "N/A"
-                    ELSE (select cname from category where categoryid = t.categoryid) END cname
-                    FROM task t WHERE taskid = ?;
-                ''', (task_id,))
-                
-                view_task(cur, task_id)
+        task_id = get_id("\nEnter Task ID: ", "task", None, None, cur)
+
+        print(f"\nTask Info:")
+        view_task(cur, task_id)
     else:
         print("There are currently no tasks.")
         return None
 
     while True:
-        print("\n" + "Edit task".center(24, "-"))
-        print("[1] Title")
-        print("[2] Details")
-        print("[3] Status")
-        print("[4] Due date")
-        print("[5] Category ")
-        print("[0] Back to Edit Menu")
-        print("-----------------------")
+        print("\nEdit: ")
+        print("\t1] Title")
+        print("\t[2] Details")
+        print("\t[3] Status")
+        print("\t[4] Due date")
+        print("\t[5] Category ")
+        print("\t[0] Back to Edit Menu")
         choice = get_input("\nEnter choice: ", "int", 0, 5, None, None)
 
         # Title
@@ -149,14 +124,7 @@ def edit_task (cur):
                 category_total = count[0]
 
             if category_total > 0:
-                flag = 0
-                while flag == 0:
-                    value = get_input("Enter new Category ID: ", "int", 1, 99, "\nJust remove category? (y/n) ", True)
-                    flag = validator("category", value, cur)
-
-                    if flag == 0:
-                        print("Invalid input!")
-                    
+                value = get_id("Enter new Category ID: ", "category", "\nJust remove category? (y/n) ", True, cur)
             else:
                 print("There are currently no categories.")
 
@@ -166,15 +134,15 @@ def edit_task (cur):
         else:
             print("Invalid choice!\n")
 
-        cur.execute(f"UPDATE task SET {attribute} = ? WHERE taskid = ?;", (value, task_id))
-        cur.execute('''
-            SELECT t.taskid, t.title, t.details, t.status, COALESCE(t.duedate,"N/A") duedate, COALESCE(t.categoryid,"N/A") categoryid, CASE
-            WHEN t.categoryid IS NULL THEN "N/A"
-            ELSE (select cname from category where categoryid = t.categoryid) END cname
-            FROM task t WHERE taskid = ?;
-        ''', (task_id,))
-        
+        if attribute == "status":
+            cur.execute(f"UPDATE task SET {attribute} = ? WHERE taskid = ?;", (status_arr[value-1], task_id))
+        else:
+            cur.execute(f"UPDATE task SET {attribute} = ? WHERE taskid = ?;", (value, task_id))
+
+        print(f"\nUpdated Task Info:")
         view_task(cur, task_id)
+
+        print(f"\nTask's {attribute} was successfully updated!")
             
 # Delete task
 def delete_task (cur):

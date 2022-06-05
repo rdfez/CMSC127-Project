@@ -76,7 +76,7 @@ def type (t): #Menu to choose between task or category
   return choice
 
 def viewType (t): #Menu specific for different types of view task 
-  print(f"\nT{t[1:]}:") if t=="task" else print(f"\nC{t[1:]}:")
+  print(f"\nView:")
   print(f"\t[1] a {t}")
   print(f"\t[2] all {t}")
   if t == "task":
@@ -85,7 +85,6 @@ def viewType (t): #Menu specific for different types of view task
     max = 4
   else: max = 2
   print("\t[0] Back to View Menu")
-  print("-----------------------")
   choice = get_input(f"\nView {t}: ", "int", 0, max, None, None)
   return choice
 

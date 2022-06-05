@@ -50,10 +50,13 @@ def view_allcategories (cur):
     return
         
 # View a task
-def view_task (cur):
+def view_task (cur, id):
 
     flag = 0
-    taskID = get_input("\nEnter Task ID: ", "int", 1, 99, None, None)
+    if id == 0:
+        taskID = get_input("\nEnter Task ID: ", "int", 1, 99, None, None)
+    else:
+        taskID = id
 
     cur.execute("SELECT taskid, title, details, status, duedate, categoryid FROM task WHERE taskid = ?", (taskID,))
     

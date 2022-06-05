@@ -2,7 +2,7 @@ from colorama import Fore, Back, Style
 
 from misc import get_input, validator
 from category import priority_arr, color_arr
-from view import color_dict, reset_color
+from view import color_dict, reset_color, view_task
 
 status_arr = ("Not started", "In progress", "Done")
 
@@ -55,11 +55,7 @@ def add_task (cur):
 
             if flag == 0:
                 print("Invalid input!\n")
-            else:
-                cur.execute("SELECT * FROM category WHERE categoryid = ?", (category,))
 
-                for categoryid, cname, priority, color in cur:
-                    print(f"\nCategory: ({categoryid}) {color_dict[color]} {cname} {reset_color} | Priority: {priority}")
     else:
         category = None
 
@@ -71,12 +67,7 @@ def add_task (cur):
             FROM task t WHERE taskid = ?;
         ''', (new_taskid,))
 
-    for taskid, title, details, status, duedate, categoryid, cname in cur:
-        print("\nNew Task:" +
-        f"\n    Task ID: {taskid}, Title: {title}" +
-        f"\n    Details: {details}" +
-        f"\n    Status: {status}, Due Date: {duedate}" +
-        f"\n    Category ID: {categoryid}, Category Name: {cname}")
+    view_task(cur, new_taskid)
 
     print("\nTask added successfully!")
 
@@ -105,13 +96,8 @@ def edit_task (cur):
                     ELSE (select cname from category where categoryid = t.categoryid) END cname
                     FROM task t WHERE taskid = ?;
                 ''', (task_id,))
-
-                for taskid, title, details, status, duedate, categoryid, cname in cur:
-                    print(f"\nTask Info:" +
-                    f"\n    Task ID: {taskid}, Title: {title}" +
-                    f"\n    Details: {details}" +
-                    f"\n    Status: {status}, Due Date: {duedate}" +
-                    f"\n    Category ID: {categoryid}, Category Name: {cname}")
+                
+                view_task(cur, task_id)
     else:
         print("There are currently no tasks.")
         return None
@@ -191,13 +177,8 @@ def edit_task (cur):
             ELSE (select cname from category where categoryid = t.categoryid) END cname
             FROM task t WHERE taskid = ?;
         ''', (task_id,))
-
-        for taskid, title, details, status, duedate, categoryid, cname in cur:
-            print("\nUpdated Task Info:" +
-            f"\n    Task ID: {taskid}, Title: {title}" +
-            f"\n    Details: {details}" +
-            f"\n    Status: {status}, Due Date: {duedate}" +
-            f"\n    Category ID: {categoryid}, Category Name: {cname}")
+        
+        view_task(cur, task_id)
             
 # Delete task
 def delete_task (cur):

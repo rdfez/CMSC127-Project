@@ -40,6 +40,8 @@ Extract the task-project zip file in your downloads. Open the folder in your tex
 ```
 Run:
   python main.py
+
+Enter your root password.
 ```
 
 

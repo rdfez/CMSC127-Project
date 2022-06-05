@@ -1,4 +1,4 @@
-from misc import get_input, get_id, get_categories
+from misc import get_input, get_id, get_categories, title_padding
 from colorama import Fore, Back, Style 
 
 color_dict = {
@@ -57,14 +57,14 @@ def view_task (cur, id):
                     print(f"\n({categoryid}) {color_dict[color]} {cname} " + Style.RESET_ALL)
                     print(f"\n    {taskid}\t{title}")
                     print(f"\t{details}")
-                    print(f"\tStatus: {status}\t Due Date: {duedate}")
+                    print(f"\tStatus: {status.ljust(11)}\t Due Date: {duedate}")
 
         else:
             if taskid == taskID:
                 print(f"\n(No category)")
                 print(f"    {taskid}\t{title}")
                 print(f"\t{details}")
-                print(f"\tStatus: {status}\t Due Date: {duedate}")
+                print(f"\tStatus: {status.ljust(11)}\t Due Date: {duedate}")
         
     return
 
@@ -80,7 +80,7 @@ def view_alltasks (cur):
             print(f"\n(No category)")
             print(f"\n    {taskid}\t{title}")
             print(f"\t{details}")
-            print(f"\tStatus: {status}\t Due Date: {duedate}")
+            print(f"\tStatus: {status.ljust(11)}\t Due Date: {duedate}")
 
         cur.execute("SELECT categoryid, cname, priority, color FROM category WHERE categoryid = ?", (id,))
         for categoryid, cname, priority, color in cur:
@@ -90,7 +90,7 @@ def view_alltasks (cur):
         for taskid, title, details, status, duedate, categoryid in cur:
           print(f"\n    {taskid}\t{title}")
           print(f"\t{details}")
-          print(f"\tStatus: {status}\t Due Date: {duedate}")
+          print(f"\tStatus: {status.ljust(11)}\t Due Date: {duedate}")
 
     return
 
@@ -99,13 +99,14 @@ def view_tasksperday (cur):
 
     flag = 0
     dueDate = get_input("\nEnter due date (DD-MM-YYYY): ", "date", None, None, None, None)
+    padding = title_padding(cur, "duedate", dueDate)
 
     cur.execute("SELECT taskid, title, details, status, duedate, categoryid FROM task WHERE duedate = ?", (dueDate,))
 
     for taskid, title, details, status, duedate, categoryid in cur:
-        if flag == 0: print(f"\n  ID\tTitle\t\tStatus\n")
+        if flag == 0: print("\n  ID" + "\tTitle".ljust(padding) + "\tStatus\n")
         if duedate == dueDate:
-            print(f"  • {taskid}\t{title}\t{status}")
+            print(f"  • {taskid}\t{title.ljust(padding)}\t{status}")
             flag = 1
     
     if flag == 0: print("\nYay! No tasks for this day!")
@@ -117,15 +118,16 @@ def view_taskspermonth (cur):
 
     flag = 0
     month = get_input("\nEnter month (MM): ", "month", 1, 12, None, None)
+    padding = title_padding(cur, "MONTH(duedate)", month)
 
     cur.execute("SELECT taskid, title, details, status, duedate, categoryid FROM task WHERE MONTH(duedate) = ?", (month,))
 
     for taskid, title, details, status, duedate, categoryid in cur:
-        if flag == 0: print("\n  ID\t Title\t\tStatus\t\tDue Date\n") 
+        if flag == 0: print("\n  ID" + "\tTitle".ljust(padding) + "\tStatus".ljust(11) + "\tDue Date\n") 
         date = str(duedate)
         mm = date[5:7]
         if mm == month:
-            print(f"  • {taskid}\t{title}\t{status}\t{duedate}")
+            print(f"  • {taskid}\t{title.ljust(padding)}\t{status.ljust(11)}\t{duedate}")
             flag = 1
 
     if flag == 0: print("\nYay! No tasks for this month!")

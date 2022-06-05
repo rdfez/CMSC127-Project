@@ -135,3 +135,10 @@ def get_categories(cur):
     for taskid, title, details, status, duedate, categoryid in cur:
         category_list.append(categoryid)
     return category_list
+
+# Get max length from task set for padding
+def title_padding(cur, condition, value):
+    cur.execute(f"SELECT MAX(LENGTH(title)) max FROM task WHERE {condition} = ?", (value,))
+    
+    for max in cur:
+        return max[0]

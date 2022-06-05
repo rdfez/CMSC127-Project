@@ -36,8 +36,8 @@ Install Colorama in your Windows:
   Type “pip install colorama ” (without quotes) in the command line and hit Enter.
 ```
 
-Extract the task-project zip file in your downloads.
-Open the folder in your text editor
+Extract the task-project zip file in your downloads. Open the folder in your text editor.
+```
 Run:
 
 ```bash

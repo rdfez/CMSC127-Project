@@ -8,8 +8,11 @@ A simplified version of your phone's task management app, where you may list tas
 * Edit Task
 * Edit Category
 * Delete Task
+* Delete All Tasks
 * Delete Category
+* Delete All Categories
 * View Category
+* View All Categories
 * View Task
 * View All Task
 * View Task per Day

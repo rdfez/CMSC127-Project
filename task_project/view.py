@@ -16,26 +16,18 @@ reset_color = Style.RESET_ALL
 
 # View category
 def view_category (cur, id):
-    cur.execute("SELECT COUNT(*) count FROM category")
-
-    for count in cur:
-        category_total = count[0]
-
-    if category_total>0:
-        if id == 0:
-            categoryID = get_input("\nEnter Task ID: ", "int", 1, 99, None, None)
-        else:
-            categoryID = id
-
-        cur.execute("SELECT * FROM category WHERE categoryid = ?", (categoryID,))
-
-        for categoryid, cname, priority, color in cur:
-            if categoryID == categoryid:
-                print(f"\n{categoryid}\t{color_dict[color]} {cname} " + Style.RESET_ALL) 
-                print(f" \t! {priority}")
+    if id == 0:
+        categoryID = get_input("\nEnter Task ID: ", "int", 1, 99, None, None)
     else:
-        print("There are currently no categories.")
-        return None
+        categoryID = id
+
+    cur.execute("SELECT * FROM category WHERE categoryid = ?", (categoryID,))
+
+    for categoryid, cname, priority, color in cur:
+        if categoryID == categoryid:
+            print(f"\n{categoryid}\t{color_dict[color]} {cname} " + Style.RESET_ALL) 
+            print(f" \t! {priority}")
+    return 
 
 # View all categories
 def view_allcategories (cur): 

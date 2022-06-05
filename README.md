@@ -48,4 +48,4 @@ Run:
 
 - [@royallenfernandez](https://www.github.com/rdfez)
 - [@lykajoyceaquino](https://www.github.com/ljaquinopo)
-- [@grendelnapiza](https://www.github.com/grnlnapiza)
+- [@grendelnapiza](https://www.github.com/grndlnapiza)

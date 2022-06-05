@@ -18,6 +18,11 @@ A simplified version of your phone's task management app, where you may list tas
 * View Task per Day
 * View Task per Month
 
+| FirstName     | LastName      | City   
+| ------------- | ------------- | --------    |
+| `John`        | Test1         | `NewYork`   |
+| `Bob`         | Test2         | `Toronto`   |
+
 ## Run Locally
 
 Go to this link:

@@ -39,8 +39,6 @@ Install Colorama in your Windows:
 Extract the task-project zip file in your downloads. Open the folder in your text editor.
 ```
 Run:
-
-```bash
   python main.py
 ```
 

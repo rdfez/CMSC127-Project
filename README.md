@@ -3,25 +3,12 @@
 A simplified version of your phone's task management app, where you may list tasks, categorize them, and set deadlines.
 
 ### Things You Can Do in The Application:
-* Add Category
-* Add Task
-* Edit Task
-* Edit Category
-* Delete Task
-* Delete All Tasks
-* Delete Category
-* Delete All Categories
-* View Category
-* View All Categories
-* View Task
-* View All Task
-* View Task per Day
-* View Task per Month
 
-| FirstName     | LastName      | City   
-| ------------- | ------------- | --------    |
-| `John`        | Test1         | `NewYork`   |
-| `Bob`         | Test2         | `Toronto`   |
+| Add Category        | Add Task      | Edit Task
+| Edit Category   | Delete Task   |  Delete All Tasks    |
+| `Delete Category` | `Delete All Categories` | `View Category`   |
+| `View All Categories` | `View Task`      | `View All Tasks`   |
+| `View Task per Day` | `View Task per Month` |       |
 
 ## Run Locally
 

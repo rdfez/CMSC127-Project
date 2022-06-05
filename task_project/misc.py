@@ -126,3 +126,10 @@ def get_id(msg, type, optional_msg, optional_rev, cur):
 
             except (ValueError, TypeError):
                 print("Invalid input!")
+                
+def get_categories(cur):
+    category_list = []
+    cur.execute("SELECT taskid, title, details, status, duedate, categoryid FROM task GROUP BY categoryid")
+    for taskid, title, details, status, duedate, categoryid in cur:
+        category_list.append(categoryid)
+    return category_list

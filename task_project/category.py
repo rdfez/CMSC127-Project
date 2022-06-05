@@ -51,20 +51,10 @@ def add_category (cur):
 
 # Edit category
 def edit_category (cur):
-    cur.execute("SELECT COUNT(*) count FROM category")
-
-    for count in cur:
-        category_total = count[0]
-
-    if category_total > 0:
-        category_id = get_id("\nEnter Category ID: ", "category", None, None, cur)
-        
-        print(f"\nCategory Info:")
-        view_category(cur, category_id)
-
-    else:
-        print("There are currently no categories.")
-        return None
+    category_id = get_id("\nEnter Category ID: ", "category", None, None, cur)
+    
+    print(f"\nCategory Info:")
+    view_category(cur, category_id)
 
     while True:
         print('''\nEdit:
@@ -116,21 +106,14 @@ def edit_category (cur):
         view_category(cur, category_id)
 
         print(f"\nTask's {attribute} was successfully updated!")
+    return
         
 # Delete category
 def delete_category (cur):
-    cur.execute("SELECT COUNT(*) count FROM category")
+    category_id = get_id("\nEnter Category ID: ", "category", None, None, cur)
+    #we should set to null the category of the tasks in this category
+    cur.execute("UPDATE task SET categoryid = NULL WHERE categoryid = ?;", (category_id,))
+    cur.execute("DELETE FROM category WHERE categoryid = ?", (category_id,))
+    print("\nCategory deleted.")
 
-    for count in cur:
-        category_total = count[0]
-
-    if category_total > 0:
-        category_id = get_id("\nEnter Category ID: ", "category", None, None, cur)
-        #we should set to null the category of the tasks in this category
-        cur.execute("UPDATE task SET categoryid = NULL WHERE categoryid = ?;", (category_id,))
-        cur.execute("DELETE FROM category WHERE categoryid = ?", (category_id,))
-        print("\nCategory deleted.\n")
-
-    else:
-        print("There are currently no categories.")
-        return None
+    return 

@@ -188,7 +188,7 @@ def deletemenu (): #Delete feature's menu
     delete = type("Delete")
     if delete == 1:
       choice = deleteType("task")
-      taskTotal = count("task", cur)
+      taskTotal = count("task", cur, True)
       if choice == 1:
         if taskTotal is not None:
           print("\n-> Deleting a task")
@@ -201,7 +201,7 @@ def deletemenu (): #Delete feature's menu
             delete_all_task(cur)
     elif delete == 2:
       choice = deleteType("category")
-      categoryTotal = count("category", cur)
+      categoryTotal = count("category", cur, True)
       if choice == 1:
         if categoryTotal is not None: 
           print("\n-> Deleting a category")

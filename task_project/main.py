@@ -1,5 +1,4 @@
 import mariadb
-from datetime import datetime, date
 
 from misc import count, get_input
 from view import view_category, view_alltasks, view_task, view_tasksperday, view_taskspermonth, view_allcategories
@@ -96,7 +95,7 @@ def addmenu (): #Add feature's menu
   while True:
     add = type("Add")
     if add == 1:
-        print("\n-> Adding a task", cur)
+        print("\n-> Adding a task")
         #call add a task
         add_task(cur)
     elif add == 2:

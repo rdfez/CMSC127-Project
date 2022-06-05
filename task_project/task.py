@@ -1,4 +1,8 @@
+from colorama import Fore, Back, Style 
+
 from misc import get_input, validator
+from category import priority_arr, color_arr
+from view import color_dict, reset_color
 
 status_arr = ("Not started", "In progress", "Done")
 
@@ -35,7 +39,7 @@ def add_task (cur):
     status = get_input("Enter your status choice: ", "int", 1, 3, None, None)
 
     # Due date
-    duedate = get_input("Enter due date (DD-MM-YYYY): ", "date", None, None, "Add a due date? (y/n) ", False)
+    duedate = get_input("Enter due date (DD-MM-YYYY): ", "date", None, None, "\nAdd a due date? (y/n) ", False)
 
     # Category
     cur.execute("SELECT COUNT(*) count FROM category")
@@ -44,12 +48,37 @@ def add_task (cur):
         category_total = count[0]
 
     if category_total > 0:
-        category = get_input("Enter Category ID: ", "int", 1, category_total, "Add to existing category? (y/n) ", False)
+        flag = 0
+        while flag == 0:
+            category = get_input("Enter Category ID: ", "int", 1, 99, "\nAdd to existing category? (y/n) ", False)
+            flag = validator("category", category, cur)
+
+            if flag == 0:
+                print("Invalid input!\n")
+            else:
+                cur.execute("SELECT * FROM category WHERE categoryid = ?", (category,))
+
+                for categoryid, cname, priority, color in cur:
+                    print(f"\nCategory: ({categoryid}) {color_dict[color]} {cname} {reset_color} | Priority: {priority}")
     else:
-        print("There are currently no categories.")
         category = None
 
     cur.execute("INSERT INTO task VALUES (?, ?, ?, ?, ?, ?);", (new_taskid, title, details, status_arr[status-1], duedate, category))
+    cur.execute('''
+            SELECT t.taskid, t.title, t.details, t.status, COALESCE(t.duedate,"N/A") duedate, COALESCE(t.categoryid,"N/A") categoryid, CASE
+            WHEN t.categoryid IS NULL THEN "N/A"
+            ELSE (select cname from category where categoryid = t.categoryid) END cname
+            FROM task t WHERE taskid = ?;
+        ''', (new_taskid,))
+
+    for taskid, title, details, status, duedate, categoryid, cname in cur:
+        print("\nNew Task:" +
+        f"\n    Task ID: {taskid}, Title: {title}" +
+        f"\n    Details: {details}" +
+        f"\n    Status: {status}, Due Date: {duedate}" +
+        f"\n    Category ID: {categoryid}, Category Name: {cname}")
+
+    print("\nTask added successfully!")
 
 # Edit task
 def edit_task (cur):
@@ -61,34 +90,52 @@ def edit_task (cur):
     for count in cur:
         task_total = count[0]
 
-    print(task_total)
-
     if task_total > 0:
-        task_id = get_input("Enter Task ID: ", "int", 0, task_total, None, None)
+        flag = 0
+        while flag == 0:
+            task_id = get_input("\nEnter Task ID: ", "int", 1, 99, None, None)
+            flag = validator("task", task_id, cur)
+            
+            if flag == 0:
+                print("Invalid input!\n")
+            elif flag == 1:
+                cur.execute('''
+                    SELECT t.taskid, t.title, t.details, t.status, COALESCE(t.duedate,"N/A") duedate, COALESCE(t.categoryid,"N/A") categoryid, CASE
+                    WHEN t.categoryid IS NULL THEN "N/A"
+                    ELSE (select cname from category where categoryid = t.categoryid) END cname
+                    FROM task t WHERE taskid = ?;
+                ''', (task_id,))
+
+                for taskid, title, details, status, duedate, categoryid, cname in cur:
+                    print(f"\nTask Info:" +
+                    f"\n    Task ID: {taskid}, Title: {title}" +
+                    f"\n    Details: {details}" +
+                    f"\n    Status: {status}, Due Date: {duedate}" +
+                    f"\n    Category ID: {categoryid}, Category Name: {cname}")
     else:
         print("There are currently no tasks.")
         return None
 
     while True:
-        print('''\nEdit:
-        [1] Title
-        [2] Details
-        [3] Status
-        [4] Due date
-        [5] Category 
-        [0] Return to Main Menu
-        ''')
-        choice = get_input("Enter choice: ", "int", 0, 5, None, None)
+        print("\n" + "Edit task".center(24, "-"))
+        print("[1] Title")
+        print("[2] Details")
+        print("[3] Status")
+        print("[4] Due date")
+        print("[5] Category ")
+        print("[0] Back to Edit Menu")
+        print("-----------------------")
+        choice = get_input("\nEnter choice: ", "int", 0, 5, None, None)
 
         # Title
         if choice == 1:
             attribute = "title"
-            value = get_input("Enter new title (Max length: 50): ", "string", 0, 50, None, None)
+            value = get_input("\nEnter new title (Max length: 50): ", "string", 0, 50, None, None)
 
         # Details
         elif choice == 2:
             attribute = "details"
-            value = get_input("Enter new details (Max length: 500): ", "string", 0, 500, None, None)
+            value = get_input("\nEnter new details (Max length: 500): ", "string", 0, 500, None, None)
 
         # Status
         elif choice == 3:
@@ -104,7 +151,7 @@ def edit_task (cur):
         # Due date
         elif choice == 4:
             attribute = "duedate"
-            value = get_input("Enter new due date (DD-MM-YYYY): ", "date", None, None, "Remove due date? (y/n) ", True)
+            value = get_input("Enter new due date (DD-MM-YYYY): ", "date", None, None, "\nRemove due date? (y/n) ", True)
 
         # Category
         elif choice == 5:
@@ -116,7 +163,18 @@ def edit_task (cur):
                 category_total = count[0]
 
             if category_total > 0:
-                value = get_input("Enter new Category ID: ", "int", 1, category_total, "Remove from category? (y/n) ", True)
+                flag = 0
+                while flag == 0:
+                    value = get_input("Enter new Category ID: ", "int", 1, 99, "\nJust remove category? (y/n) ", True)
+                    flag = validator("category", value, cur)
+
+                    if flag == 0:
+                        print("Invalid input!")
+                    elif flag == 1:
+                        cur.execute("SELECT * FROM category WHERE categoryid = ?", (value,))
+
+                        for categoryid, cname, priority, color in cur:
+                            print(f"\nCategory: ({categoryid}) {color_dict[color]} {cname} {reset_color} | Priority: {priority}")
             else:
                 print("There are currently no categories.")
 
@@ -124,10 +182,23 @@ def edit_task (cur):
             break
 
         else:
-            print("Invalid choice!")
+            print("Invalid choice!\n")
 
         cur.execute(f"UPDATE task SET {attribute} = ? WHERE taskid = ?;", (value, task_id))
+        cur.execute('''
+            SELECT t.taskid, t.title, t.details, t.status, COALESCE(t.duedate,"N/A") duedate, COALESCE(t.categoryid,"N/A") categoryid, CASE
+            WHEN t.categoryid IS NULL THEN "N/A"
+            ELSE (select cname from category where categoryid = t.categoryid) END cname
+            FROM task t WHERE taskid = ?;
+        ''', (task_id,))
 
+        for taskid, title, details, status, duedate, categoryid, cname in cur:
+            print("\nUpdated Task Info:" +
+            f"\n    Task ID: {taskid}, Title: {title}" +
+            f"\n    Details: {details}" +
+            f"\n    Status: {status}, Due Date: {duedate}" +
+            f"\n    Category ID: {categoryid}, Category Name: {cname}")
+            
 # Delete task
 def delete_task (cur):
     # Task ID

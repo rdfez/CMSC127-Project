@@ -42,6 +42,14 @@ def add_category (cur):
     color = get_input("Enter color: ", "int", 1, 8, None, None)
             
     cur.execute("INSERT INTO category VALUES (?, ?, ?, ?);", (new_categoryid, category_name, priority_arr[priority-1], color_arr[color-1]))
+    cur.execute("SELECT categoryid, cname, priority, color FROM category WHERE categoryid = ?;", (new_categoryid,))
+
+    for categoryid, cname, priority, color in cur:
+        print("\nNew Category:" +
+        f"\n    Category ID: {categoryid}, Category Name: {cname}" +
+        f"\n    Priority: {priority}, Due Date: {color}")
+
+    print("\nCategory added successfully!")
 
 # Edit category
 def edit_category (cur):

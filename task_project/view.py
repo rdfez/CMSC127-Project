@@ -15,7 +15,7 @@ color_dict = {
 reset_color = Style.RESET_ALL
 
 # View category
-def view_category (cur):
+def view_category (cur, id):
     flag = 0
     # Task ID
     cur.execute("SELECT COUNT(*) count FROM category")
@@ -26,7 +26,11 @@ def view_category (cur):
     # print(category_total)
 
     if category_total > 0:
-        category_id = get_input("\nEnter Category ID: ", "int", 1, 99, None, None)
+        if id == 0:
+            category_id = get_input("\nEnter Category ID: ", "int", 1, 99, None, None)
+        else:
+            category_id = id
+            
         cur.execute("SELECT * FROM category WHERE categoryid = ?", (category_id,))
 
         for categoryid, cname, priority, color in cur:

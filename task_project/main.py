@@ -161,7 +161,7 @@ def viewmenu (): #View feature's menu
           if view == 1:
             print("\n-> Viewing a category")
             #view a category
-            view_category(cur)
+            view_category(cur, 0)
           elif view == 2:
             print("\n-> Viewing all categories")
             #view all categories

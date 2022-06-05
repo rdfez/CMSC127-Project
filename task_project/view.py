@@ -26,7 +26,7 @@ def view_category (cur):
     # print(category_total)
 
     if category_total > 0:
-        category_id = get_input("\nEnter Category ID: ", "int", 0, category_total, None, None)
+        category_id = get_input("\nEnter Category ID: ", "int", 1, 99, None, None)
         cur.execute("SELECT * FROM category WHERE categoryid = ?", (category_id,))
 
         for categoryid, cname, priority, color in cur:
@@ -50,10 +50,10 @@ def view_allcategories (cur):
     return
         
 # View a task
-def view_task (totalCount, cur):
+def view_task (cur):
 
     flag = 0
-    taskID = get_input("\nEnter Task ID: ", "int", 0, totalCount, None, None)
+    taskID = get_input("\nEnter Task ID: ", "int", 1, 99, None, None)
 
     cur.execute("SELECT taskid, title, details, status, duedate, categoryid FROM task WHERE taskid = ?", (taskID,))
     

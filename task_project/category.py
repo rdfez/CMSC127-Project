@@ -47,7 +47,7 @@ def add_category (cur):
     for categoryid, cname, priority, color in cur:
         print("\nNew Category:" +
         f"\n    Category ID: {categoryid}, Category Name: {cname}" +
-        f"\n    Priority: {priority}, Due Date: {color}")
+        f"\n    Priority: {priority}, Color: {color}")
 
     print("\nCategory added successfully!")
 
@@ -63,7 +63,7 @@ def edit_category (cur):
     # print(category_total)
 
     if category_total > 0:
-        category_id = get_input("Enter Category ID: ", "int", 0, category_total, None, None)
+        category_id = get_input("Enter Category ID: ", "int", 1, 99, None, None)
         cur.execute("SELECT * FROM category WHERE categoryid = ?", (category_id,))
 
         for categoryid, cname, priority, color in cur:
@@ -131,7 +131,7 @@ def delete_category (cur):
     # print(category_total)
 
     if category_total > 0:
-        category_id = get_input("Enter Category ID: ", "int", 0, category_total, None, None)
+        category_id = get_input("Enter Category ID: ", "int", 1, 99, None, None)
         #we should set to null the category of the tasks in this category
         cur.execute("UPDATE task SET categoryid = NULL WHERE categoryid = ?;", (category_id,))
         cur.execute("DELETE FROM category WHERE categoryid = ?", (category_id,))

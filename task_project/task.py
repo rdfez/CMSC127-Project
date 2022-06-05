@@ -210,7 +210,7 @@ def delete_task (cur):
     # print(task_total)
 
     if task_total > 0:
-        task_id = get_input("Enter Task ID: ", "int", 0, task_total, None, None)
+        task_id = get_input("Enter Task ID: ", "int", 1, 99, None, None)
         cur.execute("DELETE FROM task WHERE taskid = ?", (task_id,))
         print("\nTask deleted.\n")
     else:

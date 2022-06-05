@@ -5,7 +5,6 @@ from view import view_category, view_alltasks, view_task, view_tasksperday, view
 from task import add_task, edit_task, delete_task
 from category import add_category, edit_category, delete_category
 
-
 # Initialize database/connection
 def init():
     # Connect to MariaDB Platform
@@ -139,7 +138,7 @@ def viewmenu (): #View feature's menu
           if view == 1: 
             print("\n-> Viewing a task")
             #call view a task
-            view_task(taskTotal, cur)
+            view_task(cur)
           elif view == 2:
             print("\n-> Viewing all tasks")
             #call view all task

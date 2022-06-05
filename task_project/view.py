@@ -1,7 +1,7 @@
 from misc import get_input
 from colorama import Fore, Back, Style 
 
-color_arr = {
+color_dict = {
     "Black": "", 
     "Red": Back.RED, 
     "Green": Back.GREEN, 
@@ -31,7 +31,7 @@ def view_category (cur):
 
         for categoryid, cname, priority, color in cur:
             if category_id == categoryid:
-                print(f"\n{categoryid}\t{color_arr[color]} {cname} " + Style.RESET_ALL) 
+                print(f"\n{categoryid}\t{color_dict[color]} {cname} " + Style.RESET_ALL) 
                 print(f" \t! {priority}")
                 flag = 1
     else:
@@ -44,10 +44,10 @@ def view_allcategories (cur):
     cur.execute("SELECT categoryid, cname, priority, color FROM category") 
 
     for categoryid, cname, priority, color in cur: 
-        print(f"\n{categoryid}\t{color_arr[color]} {cname} " + Style.RESET_ALL)
+        print(f"\n{categoryid}\t{color_dict[color]} {cname} " + Style.RESET_ALL)
         print(f" \t! {priority}")
 
-  return
+    return
         
 # View a task
 def view_task (totalCount, cur):
@@ -62,7 +62,7 @@ def view_task (totalCount, cur):
             cur.execute("SELECT categoryid, cname,priority, color FROM category WHERE categoryid = ?", (categoryid,))
             for categoryid, cname, priority, color in cur:
                 if taskid == taskID:
-                    print(f"\n({categoryid}) {color_arr[color]} {cname} " + Style.RESET_ALL)
+                    print(f"\n({categoryid}) {color_dict[color]} {cname} " + Style.RESET_ALL)
                     print(f"    {taskid}\t{title}")
                     print(f"\t{details}")
                     print(f"\tStatus: {status}\t Due Date: {duedate}")
@@ -103,7 +103,7 @@ def view_alltasks (cur):
 
         cur.execute("SELECT categoryid, cname, priority, color FROM category WHERE categoryid = ?", (id,))
         for categoryid, cname, priority, color in cur:
-          print(f"\n({categoryid}) {color_arr[color]} {cname} " + Style.RESET_ALL)
+          print(f"\n({categoryid}) {color_dict[color]} {cname} " + Style.RESET_ALL)
 
         cur.execute("SELECT taskid, title, details, status, duedate, categoryid FROM task WHERE categoryid = ?", (id,))
         for taskid, title, details, status, duedate, categoryid in cur:

@@ -42,12 +42,9 @@ def add_category (cur):
     color = get_input("Enter color: ", "int", 1, 8, None, None)
             
     cur.execute("INSERT INTO category VALUES (?, ?, ?, ?);", (new_categoryid, category_name, priority_arr[priority-1], color_arr[color-1]))
-    cur.execute("SELECT categoryid, cname, priority, color FROM category WHERE categoryid = ?;", (new_categoryid,))
 
-    for categoryid, cname, priority, color in cur:
-        print("\nNew Category:" +
-        f"\n    Category ID: {categoryid}, Category Name: {cname}" +
-        f"\n    Priority: {priority}, Color: {color}")
+    print("\nNew Category: ")
+    view_category(cur, new_categoryid)
 
     print("\nCategory added successfully!")
 
@@ -96,15 +93,26 @@ def edit_category (cur):
         # Level of Priority
         elif choice == 2:
             attribute = "priority"
-            print('''\nStatus:
-            Urgent | High | Normal | Low
+            print('''\nPriority:
+            [1] Urgent
+            [2] High
+            [3] Medium
+            [4] Low
             ''')
-            value = get_input("Enter new level of priority: ", "string", 1, 6, None, None)
+            int_value = get_input("Enter new level of priority: ", "int", 1, 4, None, None)
+            value = priority_arr[int_value-1]
 
         # Color
         elif choice == 3:
             attribute = "color"
-            value = get_input("Enter color: ", "string", 0, 10, None, None)
+            print('''\nColor:
+            [1] None/Black\t[5] Blue
+            [2] Red\t\t[6] Magenta
+            [3] Green\t\t[7] Cyan
+            [4] Yellow\t\t[8] White
+            ''')
+            int_value = get_input("Enter color: ", "int", 1, 8, None, None)
+            value = color_arr[int_value-1]
 
         elif choice == 0:
             break

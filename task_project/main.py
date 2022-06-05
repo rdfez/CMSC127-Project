@@ -138,7 +138,7 @@ def viewmenu (): #View feature's menu
           if view == 1: 
             print("\n-> Viewing a task")
             #call view a task
-            view_task(cur)
+            view_task(cur, 0)
           elif view == 2:
             print("\n-> Viewing all tasks")
             #call view all task

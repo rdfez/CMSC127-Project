@@ -1,8 +1,7 @@
 from colorama import Fore, Back, Style 
 
 from misc import get_id, get_input, validator
-from category import priority_arr, color_arr
-from view import color_dict, reset_color, view_task
+from view import view_task
 
 status_arr = ("Not started", "In progress", "Done")
 
@@ -61,8 +60,6 @@ def add_task (cur):
 
 # Edit task
 def edit_task (cur):
-    edit_bool = True
-
     # Task id
     cur.execute("SELECT COUNT(*) count FROM task")
 
@@ -155,7 +152,7 @@ def delete_task (cur):
     # print(task_total)
 
     if task_total > 0:
-        task_id = get_input("Enter Task ID: ", "int", 1, 99, None, None)
+        task_id = get_id("Enter Task ID: ", "int", None, None, cur)
         cur.execute("DELETE FROM task WHERE taskid = ?", (task_id,))
         print("\nTask deleted.\n")
     else:

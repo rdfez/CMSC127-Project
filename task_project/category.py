@@ -1,4 +1,5 @@
 from misc import get_input, validator
+from view import view_category
 
 priority_arr = ("Urgent", "High", "Medium", "Low")
 color_arr = ("Black", "Red", "Green", "Yellow", "Blue", "Magenta", "Cyan", "White")

@@ -4,7 +4,7 @@ A simplified version of your phone's task management app, where you may list tas
 
 ### Things You Can Do in The Application:
 
-| `Add Category`        | `Add Task`              | `Edit Task`
+| `Add Category`        | `Add Task`              | `Edit Task`          |
 | `Edit Category`       | `Delete Task`           | `Delete All Tasks`   |
 | `Delete Category`     | `Delete All Categories` | `View Category`      |
 | `View All Categories` | `View Task`             | `View All Tasks`     |

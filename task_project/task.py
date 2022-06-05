@@ -156,11 +156,7 @@ def edit_task (cur):
 
                     if flag == 0:
                         print("Invalid input!")
-                    elif flag == 1:
-                        cur.execute("SELECT * FROM category WHERE categoryid = ?", (value,))
-
-                        for categoryid, cname, priority, color in cur:
-                            print(f"\nCategory: ({categoryid}) {color_dict[color]} {cname} {reset_color} | Priority: {priority}")
+                    
             else:
                 print("There are currently no categories.")
 

@@ -51,33 +51,22 @@ def add_category (cur):
 
 # Edit category
 def edit_category (cur):
-    edit_bool = True
-    flag = 0 #will check if the category isn't deleted
     cur.execute("SELECT COUNT(*) count FROM category")
 
     for count in cur:
         category_total = count[0]
 
-    # print(category_total)
-
     if category_total > 0:
-        category_id = get_input("Enter Category ID: ", "int", 1, 99, None, None)
-        cur.execute("SELECT * FROM category WHERE categoryid = ?", (category_id,))
-
-        for categoryid, cname, priority, color in cur:
-            if category_id == categoryid:
-                print(f"\nCategory Id: {categoryid}, Category Name: {cname} Priority: {priority}, Color: {color}\n")
-                flag = 1 #the category exist
+        category_id = get_id("\nEnter Category ID: ", "category", None, None, cur)
+        
+        print(f"\nCategory Info:")
+        view_category(cur, category_id)
 
     else:
         print("There are currently no categories.")
         return None
 
-    if flag==0: 
-        print("\nThe category doesn't exist.\n")
-        edit_bool = False
-
-    while edit_bool:
+    while True:
         print('''\nEdit:
         [1] Category Name
         [2] Level of Priority
@@ -123,12 +112,11 @@ def edit_category (cur):
 
         cur.execute("UPDATE category SET " + attribute + " = ? WHERE categoryid = ?;", (value, category_id))
 
-        cur.execute("SELECT categoryid, cname, priority, color FROM category")
+        print(f"\nUpdated Task Info:")
+        view_category(cur, category_id)
 
-        for categoryid, cname, priority, color in cur:
-            if category_id == categoryid:
-                print(f"\nUpdated Version: \nCategory Id: {categoryid}, Category Name: {cname} Level of Priority: {priority}, Color: {color}")
-
+        print(f"\nTask's {attribute} was successfully updated!")
+        
 # Delete category
 def delete_category (cur):
     # Task ID

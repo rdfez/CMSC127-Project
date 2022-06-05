@@ -1,4 +1,4 @@
-from misc import get_input
+from misc import get_input, get_id, get_categories
 from colorama import Fore, Back, Style 
 
 color_dict = {
@@ -50,9 +50,8 @@ def view_allcategories (cur):
 # View a task
 def view_task (cur, id):
 
-    flag = 0
     if id == 0:
-        taskID = get_input("\nEnter Task ID: ", "int", 1, 99, None, None)
+        taskID = get_id("\nEnter Task ID: ", "task", None, None, cur)
     else:
         taskID = id
 
@@ -67,31 +66,20 @@ def view_task (cur, id):
                     print(f"\n    {taskid}\t{title}")
                     print(f"\t{details}")
                     print(f"\tStatus: {status}\t Due Date: {duedate}")
-                    flag = 1
+
         else:
             if taskid == taskID:
                 print(f"\n(No category)")
                 print(f"    {taskid}\t{title}")
                 print(f"\t{details}")
                 print(f"\tStatus: {status}\t Due Date: {duedate}")
-                flag = 1
         
-    if flag == 0: print("\nThe task does not exist.")
-
     return
-
-# Get list of categories
-def getCategories(cur):
-    category_list = []
-    cur.execute("SELECT taskid, title, details, status, duedate, categoryid FROM task GROUP BY categoryid")
-    for taskid, title, details, status, duedate, categoryid in cur:
-        category_list.append(categoryid)
-    return category_list
 
 # View all tasks
 def view_alltasks (cur):
             
-    category_list = getCategories(cur)
+    category_list = get_categories(cur)
 
     for id in category_list:
         if id is None:

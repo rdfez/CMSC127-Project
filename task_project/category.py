@@ -119,16 +119,13 @@ def edit_category (cur):
         
 # Delete category
 def delete_category (cur):
-    # Task ID
     cur.execute("SELECT COUNT(*) count FROM category")
 
     for count in cur:
         category_total = count[0]
 
-    # print(category_total)
-
     if category_total > 0:
-        category_id = get_input("Enter Category ID: ", "int", 1, 99, None, None)
+        category_id = get_id("\nEnter Category ID: ", "category", None, None, cur)
         #we should set to null the category of the tasks in this category
         cur.execute("UPDATE task SET categoryid = NULL WHERE categoryid = ?;", (category_id,))
         cur.execute("DELETE FROM category WHERE categoryid = ?", (category_id,))

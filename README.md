@@ -15,40 +15,36 @@ A simplified version of your phone's task management app, where you may list tas
 * View Task per Day
 * View Task per Month
 
-## Installation
-
-Install aquinofernandeznapiza-project with npm
-
-```bash
-  npm install aquinofernandeznapiza-project
-  cd aquinofernandeznapiza-project
-```
-
 ## Run Locally
 
-Clone the project
+Go to this link:
 
 ```bash
-  git clone https://github.com/rdfez/CMSC127-Project
+  https://github.com/rdfez/CMSC127-Project](https://github.com/rdfez/CMSC127-Project/tree/main/task_project)
 ```
 
-Go to the project directory
+Download the github file here:
 
 ```bash
-  cd aquinofernandeznapiza-project
+  https://downgit.github.io/#/home
 ```
 
-Install dependencies
+Install Colorama in your Windows:
 
 ```bash
-  npm install
+  Open the command line.
+  Type “pip install colorama ” (without quotes) in the command line and hit Enter.
 ```
 
-Start the server
+Extract the task-project zip file in your downloads.
+Open the folder in your text editor
+Run:
 
 ```bash
-  npm run start
+  python main.py
 ```
+
+
 
 ## Authors
 

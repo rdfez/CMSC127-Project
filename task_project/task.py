@@ -143,13 +143,10 @@ def edit_task (cur):
             
 # Delete task
 def delete_task (cur):
-    # Task ID
     cur.execute("SELECT COUNT(*) count FROM task")
 
     for count in cur:
         task_total = count[0]
-
-    # print(task_total)
 
     if task_total > 0:
         task_id = get_id("Enter Task ID: ", "task", None, None, cur)

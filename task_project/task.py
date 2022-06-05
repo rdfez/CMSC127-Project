@@ -77,7 +77,7 @@ def edit_task (cur):
 
     while True:
         print("\nEdit: ")
-        print("\t1] Title")
+        print("\t[1] Title")
         print("\t[2] Details")
         print("\t[3] Status")
         print("\t[4] Due date")
@@ -152,7 +152,7 @@ def delete_task (cur):
     # print(task_total)
 
     if task_total > 0:
-        task_id = get_id("Enter Task ID: ", "int", None, None, cur)
+        task_id = get_id("Enter Task ID: ", "task", None, None, cur)
         cur.execute("DELETE FROM task WHERE taskid = ?", (task_id,))
         print("\nTask deleted.\n")
     else:

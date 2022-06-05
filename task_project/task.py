@@ -60,20 +60,10 @@ def add_task (cur):
 
 # Edit task
 def edit_task (cur):
-    # Task id
-    cur.execute("SELECT COUNT(*) count FROM task")
+    task_id = get_id("\nEnter Task ID: ", "task", None, None, cur)
 
-    for count in cur:
-        task_total = count[0]
-
-    if task_total > 0:
-        task_id = get_id("\nEnter Task ID: ", "task", None, None, cur)
-
-        print(f"\nTask Info:")
-        view_task(cur, task_id)
-    else:
-        print("There are currently no tasks.")
-        return None
+    print(f"\nTask Info:")
+    view_task(cur, task_id)
 
     while True:
         print("\nEdit: ")
@@ -140,18 +130,12 @@ def edit_task (cur):
         view_task(cur, task_id)
 
         print(f"\nTask's {attribute} was successfully updated!")
+    return
             
 # Delete task
 def delete_task (cur):
-    cur.execute("SELECT COUNT(*) count FROM task")
+    task_id = get_id("\nEnter Task ID: ", "task", None, None, cur)
+    cur.execute("DELETE FROM task WHERE taskid = ?", (task_id,))
+    print("\nTask deleted.")
 
-    for count in cur:
-        task_total = count[0]
-
-    if task_total > 0:
-        task_id = get_id("Enter Task ID: ", "task", None, None, cur)
-        cur.execute("DELETE FROM task WHERE taskid = ?", (task_id,))
-        print("\nTask deleted.\n")
-    else:
-        print("There are currently no tasks.")
-        return None
+    return 

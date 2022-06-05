@@ -20,7 +20,7 @@ A simplified version of your phone's task management app, where you may list tas
 Go to this link:
 
 ```bash
-  https://github.com/rdfez/CMSC127-Project](https://github.com/rdfez/CMSC127-Project/tree/main/task_project)
+  https://github.com/rdfez/CMSC127-Project/tree/main/task_project
 ```
 
 Download the github file here:

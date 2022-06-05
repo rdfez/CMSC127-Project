@@ -89,3 +89,40 @@ def get_input (msg, type, min, max, optional_msg, optional_rev):
 
             except (ValueError, TypeError):
                 print("Invalid input!")
+                
+def get_id(msg, type, optional_msg, optional_rev, cur):
+    # For optional attributes
+    if optional_msg:
+        prompt = True
+        while prompt:
+            user_input = input(optional_msg)
+            if user_input in ("y", "n"):
+                prompt = False
+            else:
+                print("Invalid input!")
+
+        if (optional_rev and user_input == "y") or (not optional_rev and user_input == "n"):
+            return None
+
+    while True:
+        if type == "task":
+            try:
+                task_input = int(input(msg))
+                if validator("task", task_input, cur) == 1:
+                    return task_input
+                else:
+                    print("Task doesn't exist.")
+
+            except (ValueError, TypeError):
+                print("Invalid input!")
+
+        elif type == "category":
+            try:
+                category_input = int(input(msg))
+                if validator("category", category_input, cur) == 1:
+                    return category_input
+                else:
+                    print("Category doesn't exist.")
+
+            except (ValueError, TypeError):
+                print("Invalid input!")

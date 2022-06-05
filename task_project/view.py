@@ -17,7 +17,7 @@ reset_color = Style.RESET_ALL
 # View category
 def view_category (cur, id):
     if id == 0:
-        categoryID = get_input("\nEnter Task ID: ", "int", 1, 99, None, None)
+        categoryID = get_id("\nEnter Category ID: ", "category", None, None, cur)
     else:
         categoryID = id
 

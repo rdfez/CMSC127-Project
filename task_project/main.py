@@ -2,8 +2,8 @@ import mariadb
 
 from misc import count, get_input
 from view import view_category, view_alltasks, view_task, view_tasksperday, view_taskspermonth, view_allcategories
-from task import add_task, edit_task, delete_task
-from category import add_category, edit_category, delete_category
+from task import add_task, edit_task, delete_task, delete_all_task
+from category import add_category, edit_category, delete_category, delete_all_category
 
 # Initialize database/connection
 def init():

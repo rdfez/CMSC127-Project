@@ -93,13 +93,15 @@ def addmenu (): #Add feature's menu
   while True:
     add = type("Add")
     if add == 1:
+        taskTotal = count("task", cur, False)
         print("\n-> Adding a task")
         #call add a task
-        add_task(cur)
+        add_task(cur, taskTotal)
     elif add == 2:
+        categoryTotal = count("category", cur, False)
         print("\n-> Adding a category")
         #call add a category
-        add_category(cur)
+        add_category(cur, categoryTotal)
     else: break
 
   return
@@ -109,13 +111,13 @@ def editmenu (): #Edit feature's menu
   while True:
     edit = type("Edit")
     if edit == 1:
-      taskTotal = count("task", cur)
+      taskTotal = count("task", cur, True)
       if taskTotal is not None:
         print("\n-> Editing a task")
         #call edit a task
         edit_task(cur)
     elif edit == 2:
-      categoryTotal = count("category", cur)
+      categoryTotal = count("category", cur, True)
       if categoryTotal is not None: 
         print("\n-> Editing a category")
         #call edit a category
@@ -130,7 +132,7 @@ def viewmenu (): #View feature's menu
     viewtype = type("View")
     #Task
     if viewtype == 1: 
-      taskTotal = count("task", cur)
+      taskTotal = count("task", cur, True)
       if taskTotal is not None: 
         while True:
           view = viewType("task")
@@ -153,7 +155,7 @@ def viewmenu (): #View feature's menu
           else: break
     #Category
     elif viewtype == 2: 
-      categoryTotal = count("category", cur)
+      categoryTotal = count("category", cur, True)
       if categoryTotal is not None: 
         while True:
           view = viewType("category")
@@ -175,13 +177,13 @@ def deletemenu (): #Delete feature's menu
   while True:
     delete = type("Delete")
     if delete == 1:
-      taskTotal = count("task", cur)
+      taskTotal = count("task", cur, True)
       if taskTotal is not None:
         print("\n-> Deleting a task")
         #call delete a task
         delete_task(cur)
     elif delete == 2:
-      categoryTotal = count("category", cur)
+      categoryTotal = count("category", cur, True)
       if categoryTotal is not None: 
         print("\n-> Deleting a category")
         #call delete a category

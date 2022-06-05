@@ -5,7 +5,7 @@ color_dict = {
     "Black": "", 
     "Red": Back.RED, 
     "Green": Back.GREEN, 
-    "Yellow": Back.YELLOW, 
+    "Yellow": Fore.BLACK + Back.YELLOW, 
     "Blue": Back.BLUE, 
     "Magenta": Back.MAGENTA, 
     "Cyan": Back.CYAN, 

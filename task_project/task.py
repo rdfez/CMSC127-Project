@@ -1,21 +1,18 @@
 from colorama import Fore, Back, Style 
 
-from misc import get_id, get_input, validator
+from misc import count, get_id, get_input, validator
 from view import view_task
 
 status_arr = ("Not started", "In progress", "Done")
 
 # Add task
-def add_task (cur):
-    title = details = status = duedate = category = False
-    new_taskid = 0
+def add_task (cur, task_total):
+    if task_total == None:
+        task_total = 0
+        
+    task_total = task_total + 1
 
     # Task id
-    cur.execute("SELECT COUNT(*) count FROM task")
-    
-    for count in cur:
-        task_total = count[0]+1
-
     for i in range(1, task_total+1):
         if validator("task", i, cur) == 1:
             continue
@@ -41,12 +38,9 @@ def add_task (cur):
     duedate = get_input("Enter due date (DD-MM-YYYY): ", "date", None, None, "\nAdd a due date? (y/n) ", False)
 
     # Category
-    cur.execute("SELECT COUNT(*) count FROM category")
+    category_total = count("category", cur, False)
 
-    for count in cur:
-        category_total = count[0]
-
-    if category_total > 0:
+    if category_total != None:
         category = get_id("Enter Category ID: ", "category", "\nAdd to existing category? (y/n) ", False, cur)
     else:
         category = None
@@ -104,16 +98,12 @@ def edit_task (cur):
         # Category
         elif choice == 5:
             attribute = "categoryid"
+            category_total = count("category", cur, True)
 
-            cur.execute("SELECT COUNT(*) count FROM category")
-
-            for count in cur:
-                category_total = count[0]
-
-            if category_total > 0:
+            if category_total != None:
                 value = get_id("Enter new Category ID: ", "category", "\nJust remove category? (y/n) ", True, cur)
             else:
-                print("There are currently no categories.")
+                continue
 
         elif choice == 0:
             break
@@ -130,6 +120,7 @@ def edit_task (cur):
         view_task(cur, task_id)
 
         print(f"\nTask's {attribute} was successfully updated!")
+
     return
             
 # Delete task

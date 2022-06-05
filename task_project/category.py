@@ -5,15 +5,13 @@ priority_arr = ("Urgent", "High", "Medium", "Low")
 color_arr = ("Black", "Red", "Green", "Yellow", "Blue", "Magenta", "Cyan", "White")
 
 # Add category
-def add_category (cur):
-    category_name = priority = color = False
+def add_category (cur, category_total):
+    if category_total == None:
+        category_total = 0
 
+    category_total = category_total + 1
+    
     # Category id
-    cur.execute("SELECT COUNT(*) count FROM category")
-
-    for count in cur:
-        category_total = count[0]+1
-
     for i in range(1, category_total+1):
         if validator("category", i, cur) == 1:
             continue

@@ -21,12 +21,14 @@ def validator (t, id, cur):
 # - Parameters:
 #   1. t (string): entity type (task, category)
 #   2. cursor (cursor): mariaDB cursor
-def count (t, cur):
+#   3. prompt (bool): if count() should print "no {t}s" prompt
+def count (t, cur, prompt):
   cur.execute(f"SELECT COUNT(*) count FROM {t}")
   for count in cur:
     if count[0] == 0:
-      print(f"There are currently no {t}s.") if t == "task" else print(f"There are currently no {t[:-1]}ies.")
-      return None
+        if prompt:
+            print(f"There are currently no {t}s.") if t == "task" else print(f"There are currently no {t[:-1]}ies.")
+        return None
     else: return count[0]
 
 # Get user input and validate

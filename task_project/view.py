@@ -66,7 +66,7 @@ def view_task (cur, id):
             for categoryid, cname, priority, color in cur:
                 if taskid == taskID:
                     print(f"\n({categoryid}) {color_dict[color]} {cname} " + Style.RESET_ALL)
-                    print(f"    {taskid}\t{title}")
+                    print(f"\n    {taskid}\t{title}")
                     print(f"\t{details}")
                     print(f"\tStatus: {status}\t Due Date: {duedate}")
                     flag = 1

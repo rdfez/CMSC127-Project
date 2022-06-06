@@ -131,6 +131,7 @@ def delete_task (cur):
 
     return 
 
+# Delete all task
 def delete_all_task (cur):
     cur.execute("DELETE FROM task;")
     print("\nAll tasks deleted.")

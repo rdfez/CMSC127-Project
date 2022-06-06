@@ -54,8 +54,9 @@ def init():
             CONSTRAINT `task_categoryid_fk` FOREIGN KEY (`categoryid`) REFERENCES `category` (`categoryid`)
         );
     ''')
-    
-def menu (): #Menu for the main features
+
+# Menu for the main features
+def menu (): 
   print("\n==========Menu=========")
   print("[1] Add")
   print("[2] Edit")
@@ -66,7 +67,10 @@ def menu (): #Menu for the main features
   choice = get_input("\nEnter Choice: ", "int", 0, 4, None, None)
   return choice
 
-def type (t): #Menu to choose between task or category
+# Menu to choose between task or category
+# - Parameters:
+#   1. t (string): entity type (task, category)
+def type (t): 
   print(f"\n----------{t}----------")
   print("[1] Task")
   print("[2] Category")
@@ -75,7 +79,10 @@ def type (t): #Menu to choose between task or category
   choice = get_input(f"\n{t}: ", "int", 0, 2, None, None)
   return choice
 
-def viewType (t): #Menu specific for different types of view task 
+# Menu specific for view function
+# - Parameters:
+#   1. t (string): entity type (task, category)
+def viewType (t): 
   print(f"\nView:")
   print(f"\t[1] a {t}")
   print(f"\t[2] all {t}")
@@ -88,7 +95,10 @@ def viewType (t): #Menu specific for different types of view task
   choice = get_input(f"\nView {t}: ", "int", 0, max, None, None)
   return choice
 
-def deleteType (t): #Menu specific for delete function
+#Menu specific for delete function
+# - Parameters:
+#   1. t (string): entity type (task, category)
+def deleteType (t): 
   print(f"\nDelete:")
   print(f"\t[1] a {t}")
   print(f"\t[2] all {t}")
@@ -97,7 +107,8 @@ def deleteType (t): #Menu specific for delete function
   choice = get_input(f"\nDelete {t}: ", "int", 0, max, None, None )
   return choice
 
-def addmenu (): #Add feature's menu
+# Menu for the Add feature
+def addmenu (): 
 
   while True:
     add = type("Add")
@@ -115,7 +126,9 @@ def addmenu (): #Add feature's menu
 
   return
 
-def editmenu (): #Edit feature's menu
+# Menu for the Edit feature
+# - Checks if the database is empty before calling specific edit function
+def editmenu (): 
 
   while True:
     edit = type("Edit")
@@ -135,7 +148,9 @@ def editmenu (): #Edit feature's menu
 
   return
 
-def viewmenu (): #View feature's menu
+# Menu for the View feature
+# - Checks if the database is empty before calling specific view function
+def viewmenu (): 
 
   while True:
     viewtype = type("View")
@@ -181,8 +196,9 @@ def viewmenu (): #View feature's menu
 
   return
 
-
-def deletemenu (): #Delete feature's menu
+# Menu for the Delete feature
+# - Checks if the database is empty before calling specific delete function
+def deletemenu (): 
 
   while True:
     delete = type("Delete")

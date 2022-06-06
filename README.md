@@ -1,6 +1,6 @@
-# Color Note
+<h1 align="center">Color Note :writing_hand:</h1>
 
-A simplified version of your phone's task management app, where you may list tasks, categorize them, and set deadlines.
+A simplified version of your phone's task management app, where you may list tasks, categorize them, and set deadlines. 	:speech_balloon:
 
 ### Things You Can Do in The Application:
 

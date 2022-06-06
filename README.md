@@ -36,11 +36,9 @@ Extract the task-project zip file in your downloads.
 
 Open the folder in your text editor.
 
-Go to the directory of the task_project folder in the terminal.
 ```
-Run:
+In the terminal, run:
 python main.py
-  
 ```
 
 Enter your root password.

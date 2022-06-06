@@ -91,7 +91,13 @@ def get_input (msg, type, min, max, optional_msg, optional_rev):
 
             except (ValueError, TypeError):
                 print("Invalid input!")
-                
+
+# Get task id or category id
+# - Parameters:
+#   1. msg (string): message prompt for input
+#   2. type (string): input type (int, string, date)
+#   3. optional_msg (string): message prompt for optional attributes ('y/n' prompts)
+#   4. optional_rev (bool): False = return NULL if a 'no' input should disregard optional attribute, otherwise True if 'yes'   
 def get_id(msg, type, optional_msg, optional_rev, cur):
     # For optional attributes
     if optional_msg:
@@ -128,7 +134,10 @@ def get_id(msg, type, optional_msg, optional_rev, cur):
 
             except (ValueError, TypeError):
                 print("Invalid input!")
-                
+
+# Get list of category ids
+# - Parameter:
+#     1. cursor (cursor): mariaDB cursor  
 def get_categories(cur):
     category_list = []
     cur.execute("SELECT taskid, title, details, status, duedate, categoryid FROM task GROUP BY categoryid")
@@ -137,6 +146,10 @@ def get_categories(cur):
     return category_list
 
 # Get max length from task set for padding
+# - Parameters:
+#     1. cursor (cursor): mariaDB cursor 
+#     2. condition (string): input query condition which is either duedate or month(duedate)
+#     3. value (variable): value for duedate or month
 def title_padding(cur, condition, value):
     cur.execute(f"SELECT MAX(LENGTH(title)) max FROM task WHERE {condition} = ?", (value,))
     

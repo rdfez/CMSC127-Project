@@ -1,4 +1,4 @@
-# CMSC 127 Project
+# Color Note
 
 A simplified version of your phone's task management app, where you may list tasks, categorize them, and set deadlines.
 

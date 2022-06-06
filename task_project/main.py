@@ -235,7 +235,7 @@ def deletemenu ():
 
 ########################################################
 
-print("\nWelcome to Notes!")
+print("\nWelcome to Color Note!")
 init()
 
 while True:

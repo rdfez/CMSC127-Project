@@ -36,8 +36,9 @@ Extract the task-project zip file in your downloads.
 
 Open the folder in your text editor.
 
-```
 In the terminal, run:
+
+```
 python main.py
 ```
 

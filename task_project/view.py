@@ -15,6 +15,7 @@ color_dict = {
 reset_color = Style.RESET_ALL
 
 # View category
+# Parameter id (int): categoryid when called by edit function
 def view_category (cur, id):
     if id == 0:
         categoryID = get_id("\nEnter Category ID: ", "category", None, None, cur)
@@ -40,6 +41,7 @@ def view_allcategories (cur):
     return
         
 # View a task
+# Parameter id (int): taskid when called by edit function
 def view_task (cur, id):
 
     if id == 0:

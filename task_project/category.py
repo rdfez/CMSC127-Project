@@ -116,6 +116,7 @@ def delete_category (cur):
 
     return 
 
+# Delete all category
 def delete_all_category (cur):
     cur.execute("UPDATE task SET categoryid = NULL;")
     cur.execute("DELETE FROM category;")
